@@ -31,7 +31,7 @@ def create_kara_club_data():
     ]
     # assign Labels ~~
     labels_len = len(Community_INFO)
-    node_label = np.zeros(shape=(len(G.nodes()),labels_len),dtype=float)
+    node_label = np.zeros(shape=(len(G.nodes()),labels_len),dtype=np.float)
     idx = 0
     for com in Community_INFO:
         seed = random.sample(com,1)[0]

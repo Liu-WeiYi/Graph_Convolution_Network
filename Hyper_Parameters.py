@@ -5,8 +5,6 @@
   Purpose:  Define hyper_parameters
   Created:  09/25/17
 """
-from __future__ import division
-from __future__ import print_function
 import argparse
 
 """
@@ -16,19 +14,37 @@ IMPORTANT Hyper Parameters
 def arg_parser():
     parser = argparse.ArgumentParser()
 
-    """ --- Dataset Related --- """
-    parser.add_argument('--Dataset', type=str, default='kara_club',
+    """
+    # ==================== #
+    --- Dataset Related ---
+    # ==================== #
+    """
+    parser.add_argument('--dataset', type=str, default='kara_club',
         help="Choose dataset. [kara_club]"
     )
-    """ --- Model Check Point --- """
+    """
+    # ====================== #
+    --- Model Operator ---
+    # ====================== #
+    """
     parser.add_argument('--use_ckpt', type=bool, default=False,
         help="Use pre-trained model"
     )
     parser.add_argument('--ckpt_path', type=str, default='kara_club_log/',
         help="Check point directory to restore"
     )
-    """ --- GCN-related Hyper Parameters --- """
-    parser.add_argument('--epoch', type=int, default=200,
+    parser.add_argument('--train', type=bool, default=True,
+        help="Train Flag [True]"
+    )
+    parser.add_argument('--test', type=bool, default=False,
+        help="Test Flag [False]"
+    )
+    """
+    # ================================== #
+    --- GCN-related Hyper Parameters ---
+    # ================================== #
+    """
+    parser.add_argument('--epochs', type=int, default=200,
         help="Number of Epochs to train [200]"
     )
     parser.add_argument('--init_lr', type=float, default=0.01,
