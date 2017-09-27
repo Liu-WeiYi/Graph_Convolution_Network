@@ -41,6 +41,16 @@ def arg_parser():
     )
     """
     # ================================== #
+    --- (Multi-)Net Hyper Parameters ---
+    # ================================== #
+    """
+    parser.add_argument('--net_version',type=str, default="Monoplex",
+        help="Network Type. [Monoplex], Multiplex, Multilayer"
+    )
+    parser.add_argument('--layer_merging',type=bool, default=False,
+        help="Merging layers into One Network [False]")
+    """
+    # ================================== #
     --- GCN-related Hyper Parameters ---
     # ================================== #
     """

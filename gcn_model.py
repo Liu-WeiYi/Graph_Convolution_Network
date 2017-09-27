@@ -20,6 +20,9 @@ class Graph_Convolution_Network:
         self.ckpt_path      = args.ckpt_path
         self.train          = args.train
         self.test           = args.test
+        # Multi-Net hyper parameters
+        self.net_version    = args.net_version
+        self.layer_merging  = args.layer_merging
         # GCN hyper parameters
         self.epochs         = args.epochs
         self.init_lr        = args.init_lr
