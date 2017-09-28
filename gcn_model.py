@@ -39,28 +39,46 @@ class Graph_Convolution_Network:
             print('--',k, ': ', self.__dict__[k])
 
         # define Place Holders :)
-        self.adj_ph     = tf.placeholder(dtype=tf.float32, shape=[None,None,None])
+        self.adj_ph     = tf.sparse_placeholder(dtype=tf.float32)
         self.feature_ph = tf.placeholder(dtype=tf.float32, shape=[None,None,None])
+        self.num_of_non_zero_features = tf.placeholder(dtype=tf.int32)
 
-        self.__model_construction(inputs=self.adj_ph, reuseModel=False)
+        self.__model_construction(
+            adjs_input    = self.adj_ph,
+            features_input = self.feature_ph,
+            reuseModel    = False
+        )
 
-    def __model_construction(self, inputs, reuseModel=False):
+    def __model_construction(self, adjs_input, features_input ,reuseModel=False):
         """
         Construct Model
 
-        @param inputs: 3D Tensor, shape=[num_layers, num_nodes, num_nodes]
+        @param adjs_input: 3D Tensor, shape=[num_layers, num_nodes, num_nodes]
+        @param features_input: 3D Tensor, shape=[num_layers, num_nodes, num_features]
         @param reuseModel: [False]
 
         @return logits: constructed logits
         """
-        layer = []
+        layer = [adjs_input]
 
         # First GCN Layer
         layer_conved = gcn_conv(
             name='GCN_1',
-            reuse=reuseModel
+            reuse=reuseModel,
+            adjs_input=layer[-1],
+            features_input=features_input,
+            keep_prob=self.keep_prob,
+            num_of_non_zero_features=self.num_of_non_zero_features,
+            num_labels=self.hidden1
         )
-
-
-
-
+        layer.append(layer_conved)
+        # Second GCN Layer
+        layer_conved = gcn_conv(
+            name='GCN_2',
+            reuse=reuseModel,
+            adjs_input=adjs_input,
+            features_input=layer[-1],
+            keep_prob=self.keep_prob,
+            num_of_non_zero_features=self.num_of_non_zero_features,
+            num_labels=self.num_labels
+        )
