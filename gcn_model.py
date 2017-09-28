@@ -8,9 +8,11 @@
 import tensorflow as tf
 from datetime import datetime
 
+from utils import *
+
 class Graph_Convolution_Network:
     """
-    GCN
+    GCN Related
     """
     def __init__(self,args):
         # Dataset
@@ -37,6 +39,28 @@ class Graph_Convolution_Network:
             print('--',k, ': ', self.__dict__[k])
 
         # define Place Holders :)
-        self.adj_ph     = tf.placeholder(dtype=tf.float32, shape=[None,None])
-        self.feature_ph = tf.placeholder(dtype=tf.float32, shape=[None,None])
+        self.adj_ph     = tf.placeholder(dtype=tf.float32, shape=[None,None,None])
+        self.feature_ph = tf.placeholder(dtype=tf.float32, shape=[None,None,None])
+
+        self.__model_construction(inputs=self.adj_ph, reuseModel=False)
+
+    def __model_construction(self, inputs, reuseModel=False):
+        """
+        Construct Model
+
+        @param inputs: 3D Tensor, shape=[num_layers, num_nodes, num_nodes]
+        @param reuseModel: [False]
+
+        @return logits: constructed logits
+        """
+        layer = []
+
+        # First GCN Layer
+        layer_conved = gcn_conv(
+            name='GCN_1',
+            reuse=reuseModel
+        )
+
+
+
 

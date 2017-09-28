@@ -58,7 +58,7 @@ def arg_parser():
         help="Number of Epochs to train [200]"
     )
     parser.add_argument('--init_lr', type=float, default=0.01,
-        help="initial learning rate [0.1]"
+        help="initial learning rate [0.01]"
     )
     parser.add_argument('--lr_decay_rate', type=float, default=0.96,
         help="learning rate decay value [0.1]"
